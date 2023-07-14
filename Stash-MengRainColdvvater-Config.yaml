@@ -363,6 +363,18 @@ rule-providers:
     name: ClubhouseIP
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/ClubhouseIP/ClubhouseIP.yaml
 
+  GitHub-rules:
+    behavior: classical
+    interval: 86400
+    name: GitHub
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml
+
+  Gitlab-rules:
+    behavior: classical
+    interval: 86400
+    name: Gitlab
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml
+
   Twitter-rules:
     behavior: classical
     interval: 86400
@@ -431,27 +443,30 @@ rule-providers:
 
 #分流规则引用
 rules:
-  - RULE-SET,OpenAI-rules,OpenAI
-  - RULE-SET,Netflix-rules,Netflix
-  - RULE-SET,Disney-rules,Disney+
-  - RULE-SET,HBO-rules,HBO
-  - RULE-SET,Youtube-rules,Youtube
-  - RULE-SET,Spotify-rules,Spotify
-  - RULE-SET,TikTok-rules,TikTok
-  - RULE-SET,Bilibili-rules,Bilibili
-  - RULE-SET,Telegram-rules,Telegram
-  - RULE-SET,Clubhouse-rules,Clubhouse
-  - RULE-SET,ClubhouseIP-rules,Clubhouse
-  - RULE-SET,Twitter-rules,Twitter
-  - RULE-SET,Speedtest-rules,Speedtest
-  - RULE-SET,PayPal-rules,PayPal
-  - RULE-SET,TestFlight-rules,TestFlight
-  - RULE-SET,Apple-rules,Apple
-  - RULE-SET,Google-rules,Google
-  - RULE-SET,Microsoft-rules,Microsoft
-  - RULE-SET,Weibo-rules,Weibo
-  - RULE-SET,Global-rules,Proxy
-  - RULE-SET,Mainland-rules,中国大陆
+rules:
+  - RULE-SET,OpenAI-rules,OpenAI,no-resolve
+  - RULE-SET,Netflix-rules,Netflix,no-resolve
+  - RULE-SET,Disney-rules,Disney+,no-resolve
+  - RULE-SET,HBO-rules,HBO,no-resolve
+  - RULE-SET,Youtube-rules,Youtube,no-resolve
+  - RULE-SET,Spotify-rules,Spotify,no-resolve
+  - RULE-SET,TikTok-rules,TikTok,no-resolve
+  - RULE-SET,Bilibili-rules,Bilibili,no-resolve
+  - RULE-SET,Telegram-rules,Telegram,no-resolve
+  - RULE-SET,Clubhouse-rules,Clubhouse,no-resolve
+  - RULE-SET,ClubhouseIP-rules,Clubhouse,no-resolve
+  - RULE-SET,GitHub-rules,Proxy,no-resolve
+  - RULE-SET,Gitlab-rules,Proxy,no-resolve
+  - RULE-SET,Twitter-rules,Twitter,no-resolve
+  - RULE-SET,Speedtest-rules,Speedtest,no-resolve
+  - RULE-SET,PayPal-rules,PayPal,no-resolve
+  - RULE-SET,TestFlight-rules,TestFlight,no-resolve
+  - RULE-SET,Apple-rules,Apple,no-resolve
+  - RULE-SET,Google-rules,Google,no-resolve
+  - RULE-SET,Microsoft-rules,Microsoft,no-resolve
+  - RULE-SET,Weibo-rules,Weibo,no-resolve
+  - RULE-SET,Global-rules,Proxy,no-resolve
+  - RULE-SET,Mainland-rules,中国大陆,no-resolve
   - RULE-SET,MainlandIP-rules,中国大陆
   - GEOIP,CN,DIRECT
   - MATCH,漏网之鱼
