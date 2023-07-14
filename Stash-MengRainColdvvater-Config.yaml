@@ -1,13 +1,10 @@
 # MengRain & Coldvvater-Config   (Stash)
 # Date:2022.10.5
-# 最后一次更新于：2023.02.26
+# 最后一次更新于：2023.07.14
 # Author: MengRain、Coldvvater
 #（我的TG频道：https://t.me/mengyulianmian  可从频道进群交流）
 # 下载配置后,请手动添加机场订阅
 # 找到 {远程订阅} 部分，将MyProxy 部分的 url替换为自己的机场订阅链接  
-
-subscribe-url: 你的订阅链接
-# 替换上面文字用于Stash获取机场流量信息并在主页显示
 
 #混合端口
 mixed-port: 7890
@@ -18,7 +15,7 @@ bind-address: '*'
 #模式:rule（规则） / global（全局代理）/ direct（全局直连）
 mode: Rule
 #日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
-log-level: silent
+log-level: info
 #外部控制器
 external-controller: 127.0.0.1:9090
 
@@ -29,7 +26,6 @@ dns:
   #DNS服务器
   default-nameserver:
     - 119.29.29.29
-    - 119.28.28.28
     - 223.5.5.5
     - 114.114.114.114
   #DoH服务器
@@ -40,19 +36,24 @@ dns:
   fake-ip-range: 198.18.0.1/16
   #列表中的域名将不会被解析为fake ip，这些域名相关的解析请求将会返回它们真实的IP地址
   fake-ip-filter:
-    - '*.lan'
+    - '+.lan'
     - localhost.ptlogin2.qq.com
+    - '*.battle.net'
+    - '*.blzstatic.cn'
+    - '*.battlenet.com'
+    - '*.battlenet.com.cn'
+    - 'lens.l.google.com'
     - '+.srv.nintendo.net'
     - '+.stun.playstation.net'
-    - '+.msftconnecttest.com'
     - '+.msftncsi.com'
     - '+.xboxlive.com'
     - 'msftconnecttest.com'
-    - 'xbox.*.microsoft.com'
-    - '*.battlenet.com.cn'
-    - '*.battlenet.com'
-    - '*.blzstatic.cn'
-    - '*.battle.net'
+    - 'xbox.*.*.microsoft.com'
+    - 'xbox.*.microsoft.com'         
+    - '+.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - '*.msftconnecttest.com'
+    - '*.mcdn.bilivideo.cn'
 
 #本地代理
 proxies:
@@ -60,40 +61,15 @@ proxies:
 #远程订阅
 proxy-providers:
 
-  MyProxy: &MyProxy #建立锚点
+  MyProxy:
     url: "https://sub.store/download/collection/MySub"
     # 使用Clash类型订阅链接替换掉引号""内的链接使用。
-    # 或可使用通用订阅链接通过Sub-Store进行订阅转换。
+    # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
     interval: 86400
     health-check:
       enable: true
-      interval: 3600
-      url: http://cp.cloudflare.com/generate_204
-    
-  #美国节点
-  MyProxy-US:
-    <<: *MyProxy #引用锚点内容
-    filter: "美|🇺🇲|US|(?i)States|American"
-  
-  #香港节点
-  MyProxy-HK:
-    <<: *MyProxy #引用锚点内容
-    filter: "港|🇭🇰|HK|(?i)Hong"
-  
-  #日本节点
-  MyProxy-JP:
-    <<: *MyProxy #引用锚点内容
-    filter: "日|🇯🇵|东京|JP|(?i)Japan"
-  
-  #台湾节点
-  MyProxy-TW:
-    <<: *MyProxy #引用锚点内容
-    filter: "台|🇨🇳|🇹🇼|湾|TW|(?i)Taiwan"
-  
-  #新加坡节点
-  MyProxy-SG:
-    <<: *MyProxy #引用锚点内容
-    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+      interval: 300
+      url: http://www.apple.com/library/test/success.html
 
 #策略组
 proxy-groups:
@@ -109,7 +85,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
     use: 
        - MyProxy
-    url: "http://cp.cloudflare.com/generate_204"
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
 
   - name: Fallback
@@ -117,47 +93,52 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
     use:
       - MyProxy
-    url: "http://cp.cloudflare.com/generate_204"
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
 
   - name: US 美国
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
     use:
-      - MyProxy-US
-    url: "http://cp.cloudflare.com/generate_204"
+      - MyProxy
+    filter: 美|🇺🇲|US|(?i)States|American
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
 
   - name: HK 香港
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
     use:
-      - MyProxy-HK
-    url: "http://cp.cloudflare.com/generate_204"
+      - MyProxy
+    filter: 港|🇭🇰|HK|(?i)Hong
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
   
   - name: JP 日本
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
     use:
-      - MyProxy-JP
-    url: "http://cp.cloudflare.com/generate_204"
+      - MyProxy
+    filter: 日|🇯🇵|东京|JP|(?i)Japan
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
   
   - name: TW 台湾
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
     use:
-      - MyProxy-TW
-    url: "http://cp.cloudflare.com/generate_204"
+      - MyProxy
+    filter: 台|🇨🇳|🇹🇼|湾|TW|(?i)Taiwan
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
   
   - name: SG 新加坡
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
     use:
-      - MyProxy-SG
-    url: "http://cp.cloudflare.com/generate_204"
+      - MyProxy
+    filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
+    url: "http://www.apple.com/library/test/success.html"
     interval: 300
   
   - name: 全球
@@ -285,7 +266,7 @@ proxy-groups:
       *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Weibo.png
 
-  - name: ChatGPT
+  - name: OpenAI
     type: select
     proxies:
       *G
@@ -316,7 +297,7 @@ proxy-groups:
 #远程规则集合
 rule-providers:
 
-  ChatGPT-rules:
+  OpenAI-rules:
     behavior: classical
     interval: 86400
     name: ChatGPT
@@ -448,15 +429,9 @@ rule-providers:
     name: Outside
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Global/Global_Classical.yaml
 
-  ASN-rules: 
-    behavior: classical
-    interval: 86400
-    name: ASN
-    url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/ASN_China.yaml
-
 #分流规则引用
 rules:
-  - RULE-SET,ChatGPT-rules,ChatGPT
+  - RULE-SET,OpenAI-rules,OpenAI
   - RULE-SET,Netflix-rules,Netflix
   - RULE-SET,Disney-rules,Disney+
   - RULE-SET,HBO-rules,HBO
@@ -475,10 +450,8 @@ rules:
   - RULE-SET,Google-rules,Google
   - RULE-SET,Microsoft-rules,Microsoft
   - RULE-SET,Weibo-rules,Weibo
+  - RULE-SET,Global-rules,Proxy
   - RULE-SET,Mainland-rules,中国大陆
   - RULE-SET,MainlandIP-rules,中国大陆
-  - RULE-SET,Global-rules,Proxy
-# ASN China 规则，如需自行删除注释启用，同时把Mainland-rules、MainlandIP-rules及GEOIP注释。
-  #- RULE-SET,ASN-rules,DIRECT
   - GEOIP,CN,DIRECT
   - MATCH,漏网之鱼
