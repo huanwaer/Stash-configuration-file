@@ -1,6 +1,6 @@
 # MengRain & Coldvvater-Config   (Stash)
 # Date:2022.10.5
-# 最后一次更新于：2023.07.14
+# 最后一次更新于：2023.07.16
 # Author: MengRain、Coldvvater
 #（我的TG频道：https://t.me/mengyulianmian  可从频道进群交流）
 # 下载配置后,请手动添加机场订阅
@@ -442,7 +442,6 @@ rule-providers:
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Global/Global_Classical.yaml
 
 #分流规则引用
-rules:
 rules:
   - RULE-SET,OpenAI-rules,OpenAI,no-resolve
   - RULE-SET,Netflix-rules,Netflix,no-resolve
