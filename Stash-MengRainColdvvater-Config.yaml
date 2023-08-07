@@ -13,6 +13,8 @@ allow-lan: true
 #绑定地址
 bind-address: '*'
 #模式:rule（规则） / global（全局代理）/ direct（全局直连）
+ipv6: false
+#开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
 mode: Rule
 #日志级别（日志输出级别：分级如后silent / info / warning / error / debug级别越高日志输出量越大）
 log-level: info
@@ -22,12 +24,14 @@ external-controller: 127.0.0.1:9090
 #DNS设置
 dns:
   enable: true
-  listen: 0.0.0.0:1053
+  ipv6: false
+  listen: 0.0.0.0:53
   #DNS服务器
   default-nameserver:
-    - 119.29.29.29
-    - 223.5.5.5
-    - 114.114.114.114
+    - 114.114.115.115
+    - 119.28.28.28
+    - 223.6.6.6
+    - system
   #DoH服务器
   nameserver:
     - https://dns.alidns.com/dns-query
@@ -79,6 +83,7 @@ proxy-groups:
     use:
       - MyProxy
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
+    include-all: true
 
   - name: 自动选择
     type: url-test
@@ -87,6 +92,9 @@ proxy-groups:
        - MyProxy
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
+    lazy: true
+    tolerance: 50
+    include-all: true
 
   - name: Fallback
     type: fallback
@@ -95,6 +103,8 @@ proxy-groups:
       - MyProxy
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
+    lazy: true
+    include-all: true
 
   - name: US 美国
     type: url-test
@@ -104,6 +114,8 @@ proxy-groups:
     filter: 美|🇺🇲|US|(?i)States|American
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
+    lazy: true
+    include-all: true
 
   - name: HK 香港
     type: url-test
@@ -113,7 +125,9 @@ proxy-groups:
     filter: 港|🇭🇰|HK|(?i)Hong
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
-  
+    lazy: true
+    include-all: true
+
   - name: JP 日本
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
@@ -122,7 +136,9 @@ proxy-groups:
     filter: 日|🇯🇵|东京|JP|(?i)Japan
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
-  
+    lazy: true
+    include-all: true
+
   - name: TW 台湾
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
@@ -131,7 +147,9 @@ proxy-groups:
     filter: 台|🇨🇳|🇹🇼|湾|TW|(?i)Taiwan
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
-  
+    lazy: true
+    include-all: true
+
   - name: SG 新加坡
     type: url-test
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
@@ -140,7 +158,9 @@ proxy-groups:
     filter: 新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore
     url: "http://www.apple.com/library/test/success.html"
     interval: 300
-  
+    lazy: true
+    include-all: true
+
   - name: 全球
     type: select
     proxies: &G
@@ -180,7 +200,7 @@ proxy-groups:
       *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/HBO.png
   
-  - name: Youtube
+  - name: YouTube
     type: select
     proxies:
       *G
@@ -198,7 +218,7 @@ proxy-groups:
       *G
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
   
-  - name: Bilibili
+  - name: BiliBili
     type: select
     proxies:
       - DIRECT
@@ -300,172 +320,176 @@ rule-providers:
   OpenAI-rules:
     behavior: classical
     interval: 86400
-    name: ChatGPT
-    url: https://raw.githubusercontent.com/Coldvvater/Mononoke/master/Stash/RuleSet/OpenAI.yaml
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Coldvvater/Mononoke@master/Stash/RuleSet/OpenAI.yaml
     
   Netflix-rules:
     behavior: classical
     interval: 86400
-    name: Netflix
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Netflix/Netflix.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_Classical_No_Resolve.yaml
 
   Disney-rules:
     behavior: classical
     interval: 86400
-    name: Disney
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Disney/Disney.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney_No_Resolve.yaml
 
   HBO-rules:
     behavior: classical
     interval: 86400
-    name: HBO
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/HBO/HBO.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO_No_Resolve.yaml
 
-  Youtube-rules:
+  YouTube-rules:
     behavior: classical
     interval: 86400
-    name: Youtube
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/YouTube/YouTube.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml
 
   Spotify-rules:
     behavior: classical
     interval: 86400
-    name: Spotify
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Spotify/Spotify.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify_No_Resolve.yaml
 
   TikTok-rules:
     behavior: classical
     interval: 86400
-    name: TikTok
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TikTok/TikTok.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok_No_Resolve.yaml
 
-  Bilibili-rules:
+  BiliBili-rules:
     behavior: classical
     interval: 86400
-    name: Bilibili
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/BiliBili/BiliBili.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili_No_Resolve.yaml
 
   Telegram-rules:
     behavior: classical
     interval: 86400
-    name: Telegram
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Telegram/Telegram.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml
 
   Clubhouse-rules:
     behavior: classical
     interval: 86400
-    name: Clubhouse
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Clubhouse/Clubhouse.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Clubhouse/Clubhouse_No_Resolve.yaml
 
   ClubhouseIP-rules:
     behavior: classical
     interval: 86400
-    name: ClubhouseIP
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/ClubhouseIP/ClubhouseIP.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ClubhouseIP/ClubhouseIP_No_Resolve.yaml
 
   GitHub-rules:
     behavior: classical
     interval: 86400
-    name: GitHub
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml
 
   Gitlab-rules:
     behavior: classical
     interval: 86400
-    name: Gitlab
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitLab/GitLab_No_Resolve.yaml
 
   Twitter-rules:
     behavior: classical
     interval: 86400
-    name: Twitter
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Twitter/Twitter.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml
 
   Speedtest-rules:
     behavior: classical
     interval: 86400
-    name: Speedtest
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Speedtest/Speedtest.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml
 
   PayPal-rules:
     behavior: classical
     interval: 86400
-    name: PayPal
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/PayPal/PayPal.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PayPal/PayPal_No_Resolve.yaml
 
   TestFlight-rules:
     behavior: classical
     interval: 86400
-    name: TestFlight
+    format: yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/TestFlight/TestFlight.yaml
 
   Apple-rules:
     behavior: classical
     interval: 86400
-    name: Apple
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Apple/Apple.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical_No_Resolve.yaml
 
   Google-rules:
     behavior: classical
     interval: 86400
-    name: Google
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Google/Google.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml
 
   Microsoft-rules:
     behavior: classical
     interval: 86400
-    name: Microsoft
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Microsoft/Microsoft.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml
 
   Weibo-rules:
     behavior: classical
     interval: 86400
-    name: Weibo
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Weibo/Weibo.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Weibo/Weibo_No_Resolve.yaml
 
   Mainland-rules:
     behavior: classical
     interval: 86400
-    name: Mainland
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/China/China.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_No_Resolve.yaml
 
   MainlandIP-rules:
     behavior: ipcidr
     interval: 86400
-    name: MainlandIP
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/ChinaIPs/ChinaIPs_IP.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPs_Classical_No_Resolve.yaml
 
   Global-rules:
     behavior: classical
     interval: 86400
-    name: Outside
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/release/rule/Clash/Global/Global_Classical.yaml
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical_No_Resolve.yaml
 
 #分流规则引用
 rules:
-  - RULE-SET,OpenAI-rules,OpenAI,no-resolve
-  - RULE-SET,Netflix-rules,Netflix,no-resolve
-  - RULE-SET,Disney-rules,Disney+,no-resolve
-  - RULE-SET,HBO-rules,HBO,no-resolve
-  - RULE-SET,Youtube-rules,Youtube,no-resolve
-  - RULE-SET,Spotify-rules,Spotify,no-resolve
-  - RULE-SET,TikTok-rules,TikTok,no-resolve
-  - RULE-SET,Bilibili-rules,Bilibili,no-resolve
-  - RULE-SET,Telegram-rules,Telegram,no-resolve
-  - RULE-SET,Clubhouse-rules,Clubhouse,no-resolve
-  - RULE-SET,ClubhouseIP-rules,Clubhouse,no-resolve
-  - RULE-SET,GitHub-rules,Proxy,no-resolve
-  - RULE-SET,Gitlab-rules,Proxy,no-resolve
-  - RULE-SET,Twitter-rules,Twitter,no-resolve
-  - RULE-SET,Speedtest-rules,Speedtest,no-resolve
-  - RULE-SET,PayPal-rules,PayPal,no-resolve
-  - RULE-SET,TestFlight-rules,TestFlight,no-resolve
-  - RULE-SET,Apple-rules,Apple,no-resolve
-  - RULE-SET,Google-rules,Google,no-resolve
-  - RULE-SET,Microsoft-rules,Microsoft,no-resolve
-  - RULE-SET,Weibo-rules,Weibo,no-resolve
-  - RULE-SET,Global-rules,Proxy,no-resolve
-  - RULE-SET,Mainland-rules,中国大陆,no-resolve
+  - SCRIPT,quic,REJECT
+  - RULE-SET,OpenAI-rules,OpenAI
+  - RULE-SET,Netflix-rules,Netflix
+  - RULE-SET,Disney-rules,Disney+
+  - RULE-SET,HBO-rules,HBO
+  - RULE-SET,YouTube-rules,YouTube
+  - RULE-SET,Spotify-rules,Spotify
+  - RULE-SET,TikTok-rules,TikTok
+  - RULE-SET,BiliBili-rules,BiliBili
+  - RULE-SET,Telegram-rules,Telegram
+  - RULE-SET,Clubhouse-rules,Clubhouse
+  - RULE-SET,ClubhouseIP-rules,Clubhouse
+  - RULE-SET,GitHub-rules,Proxy
+  - RULE-SET,Gitlab-rules,Proxy
+  - RULE-SET,Twitter-rules,Twitter
+  - RULE-SET,Speedtest-rules,Speedtest
+  - RULE-SET,PayPal-rules,PayPal
+  - RULE-SET,TestFlight-rules,TestFlight
+  - RULE-SET,Apple-rules,Apple
+  - RULE-SET,Google-rules,Google
+  - RULE-SET,Microsoft-rules,Microsoft
+  - RULE-SET,Weibo-rules,Weibo
+  - RULE-SET,Global-rules,Proxy
+  - RULE-SET,Mainland-rules,中国大陆
   - RULE-SET,MainlandIP-rules,中国大陆
   - GEOIP,CN,DIRECT
   - MATCH,漏网之鱼
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
