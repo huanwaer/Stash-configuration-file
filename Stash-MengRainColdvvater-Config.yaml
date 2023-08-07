@@ -475,8 +475,8 @@ rules:
   - RULE-SET,Telegram-rules,Telegram
   - RULE-SET,Clubhouse-rules,Clubhouse
   - RULE-SET,ClubhouseIP-rules,Clubhouse
-  - RULE-SET,GitHub-rules,Proxy
-  - RULE-SET,Gitlab-rules,Proxy
+  - RULE-SET,GitHub-rules,全球
+  - RULE-SET,Gitlab-rules,全球
   - RULE-SET,Twitter-rules,Twitter
   - RULE-SET,Speedtest-rules,Speedtest
   - RULE-SET,PayPal-rules,PayPal
