@@ -66,7 +66,7 @@ proxies:
 proxy-providers:
 
   MyProxy:
-    url: "https://sub.store/download/collection/MySub"
+    url: "http://127.0.0.1:25500/sub?target=clash&new_name=true&url=http%3A%2F%2Fsub.fiwebo.com%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D6e1a200056a79433a45246971843cecb&insert=false&config=ruleconfig%2FZHANG.ini&include=&exclude=&append_type=false&emoji=true&udp=false&fdn=true&sort=true&scv=false&tfo=false"
     # 使用Clash类型订阅链接替换掉引号""内的链接使用。
     # 或可使用通用订阅链接通过Sub-Store进行订阅转换(用于Stash)。
     interval: 86400
